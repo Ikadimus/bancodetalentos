@@ -6,10 +6,11 @@ import { MOCK_JOBS, MOCK_TALENTS, UNITS, MOCK_REFERRALS } from '../constants';
 
 interface AdminDashboardProps {
   onLogout: () => void;
+  user: UserProfile;
 }
 
-export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
-  const [activeTab, setActiveTab] = useState<'jobs' | 'talents' | 'users' | 'referrals'>('jobs');
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, user }) => {
+  const [activeTab, setActiveTab] = useState<'jobs' | 'talents' | 'users' | 'referrals' | 'approvals' | 'external'>('jobs');
   const [jobs, setJobs] = useState<JobVacancy[]>(MOCK_JOBS);
   const [talents, setTalents] = useState<UserProfile[]>(MOCK_TALENTS);
   const [referrals, setReferrals] = useState<Referral[]>(MOCK_REFERRALS);
@@ -44,7 +45,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-400">Logado como: <strong className="text-green-400">Desenvolvedor</strong></span>
+          <span className="text-sm text-slate-400">Logado como: <strong className="text-green-400">{user.name}</strong> ({user.role.toUpperCase()})</span>
           <button 
             onClick={onLogout}
             className="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-bold transition-colors"
@@ -83,8 +84,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === 'referrals' ? 'bg-green-600 text-white shadow-lg shadow-green-900/20' : 'text-slate-400 hover:bg-slate-800'}`}
           >
             <UserCheck className="w-5 h-5" />
-            Indicações Recebidas
+            Indicações
           </button>
+
+          {(user.role === 'rh' || user.role === 'developer') && (
+            <>
+              <button 
+                onClick={() => setActiveTab('approvals')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === 'approvals' ? 'bg-green-600 text-white shadow-lg shadow-green-900/20' : 'text-slate-400 hover:bg-slate-800'}`}
+              >
+                <CheckCircle className="w-5 h-5" />
+                Aprovação de Vagas
+              </button>
+              <button 
+                onClick={() => setActiveTab('external')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === 'external' ? 'bg-green-600 text-white shadow-lg shadow-green-900/20' : 'text-slate-400 hover:bg-slate-800'}`}
+              >
+                <Users className="w-5 h-5" />
+                Candidatos Externos
+              </button>
+            </>
+          )}
         </aside>
 
         {/* Main Content Area */}
@@ -92,10 +112,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
           {activeTab === 'jobs' && (
             <div className="space-y-6">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold font-display">Gerenciar Vagas</h2>
-                <button className="btn-primary flex items-center gap-2">
-                  <Plus className="w-5 h-5" /> Nova Vaga
-                </button>
+                <h2 className="text-2xl font-bold font-display">
+                  {user.role === 'manager' ? 'Minhas Vagas' : 'Gerenciar Vagas'}
+                </h2>
+                {(user.role === 'manager' || user.role === 'developer') && (
+                  <button className="btn-primary flex items-center gap-2">
+                    <Plus className="w-5 h-5" /> Nova Vaga
+                  </button>
+                )}
               </div>
               
               <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
@@ -109,12 +133,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800">
-                    {jobs.map(job => (
+                    {jobs.filter(j => user.role === 'manager' ? j.unit === user.unit : true).map(job => (
                       <tr key={job.id} className="hover:bg-slate-800/30 transition-colors">
                         <td className="px-6 py-4 font-bold">{job.title}</td>
                         <td className="px-6 py-4 text-slate-400">{job.unit}</td>
                         <td className="px-6 py-4">
-                          <span className="bg-green-900/20 text-green-500 px-2 py-1 rounded text-[10px] font-bold uppercase">Ativa</span>
+                          <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
+                            job.status === 'approved' ? 'bg-green-900/20 text-green-500' : 'bg-yellow-900/20 text-yellow-500'
+                          }`}>
+                            {job.status === 'approved' ? 'Ativa' : 'Pendente'}
+                          </span>
                         </td>
                         <td className="px-6 py-4 flex gap-2">
                           <button className="p-2 hover:bg-slate-700 rounded-lg text-slate-400 hover:text-white transition-colors"><Edit className="w-4 h-4" /></button>
@@ -124,6 +152,68 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'approvals' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold font-display">Aprovação de Vagas</h2>
+              </div>
+              
+              <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
+                <table className="w-full text-left">
+                  <thead className="bg-slate-800/50 text-slate-400 text-xs uppercase tracking-widest font-bold">
+                    <tr>
+                      <th className="px-6 py-4">Título</th>
+                      <th className="px-6 py-4">Unidade</th>
+                      <th className="px-6 py-4">Solicitante</th>
+                      <th className="px-6 py-4">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800">
+                    {jobs.filter(j => j.status === 'pending_approval').length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="px-6 py-12 text-center text-slate-500 italic">Nenhuma vaga pendente de aprovação.</td>
+                      </tr>
+                    ) : (
+                      jobs.filter(j => j.status === 'pending_approval').map(job => (
+                        <tr key={job.id} className="hover:bg-slate-800/30 transition-colors">
+                          <td className="px-6 py-4 font-bold">{job.title}</td>
+                          <td className="px-6 py-4 text-slate-400">{job.unit}</td>
+                          <td className="px-6 py-4 text-slate-400">{job.createdBy}</td>
+                          <td className="px-6 py-4 flex gap-2">
+                            <button className="flex items-center gap-1 px-3 py-1 bg-green-600/20 text-green-500 hover:bg-green-600 hover:text-white rounded-lg text-xs font-bold transition-all">
+                              <CheckCircle className="w-4 h-4" /> Aprovar
+                            </button>
+                            <button className="flex items-center gap-1 px-3 py-1 bg-red-600/20 text-red-500 hover:bg-red-600 hover:text-white rounded-lg text-xs font-bold transition-all">
+                              <XCircle className="w-4 h-4" /> Recusar
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'external' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold font-display">Candidatos Externos</h2>
+              </div>
+              
+              <div className="bg-slate-900 rounded-2xl border border-slate-800 p-12 text-center space-y-4">
+                <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto">
+                  <Search className="w-8 h-8 text-slate-500" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold">Banco de Talentos Externo</h3>
+                  <p className="text-slate-500 text-sm max-w-md mx-auto">Aqui você poderá visualizar todos os currículos cadastrados por pessoas que ainda não fazem parte do Grupo Solvi.</p>
+                </div>
               </div>
             </div>
           )}

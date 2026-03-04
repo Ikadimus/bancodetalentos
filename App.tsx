@@ -5,11 +5,14 @@ import { JobCard } from './components/JobCard';
 import { JobModal } from './components/JobModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Login } from './components/Login';
-import { JobVacancy, FilterType, UserProfile } from './types';
+import { Welcome } from './components/Welcome';
+import { ExternalCandidateForm } from './components/ExternalCandidateForm';
+import { EmployeePortal } from './components/EmployeePortal';
+import { JobVacancy, FilterType, UserProfile, ViewType } from './types';
 import { MOCK_JOBS, UNITS } from './constants';
 
 function App() {
-  const [view, setView] = useState<'portal' | 'admin' | 'login'>('portal');
+  const [view, setView] = useState<ViewType>('welcome');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterType>('All');
@@ -21,26 +24,77 @@ function App() {
       const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           job.department.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFilter = activeFilter === 'All' || job.unit === activeFilter;
-      return matchesSearch && matchesFilter;
+      const isApproved = job.status === 'approved';
+      return matchesSearch && matchesFilter && isApproved;
     });
   }, [searchTerm, activeFilter]);
 
   const handleLogin = (email: string, pass: string) => {
-    if ((email === 'efilho@essencisbiometano.com.br' || email === 'a@a') && pass === '123') {
+    // Developer
+    if (email === 'efilho@essencisbiometano.com.br' && pass === '123') {
       setUser({
-        id: email === 'a@a' ? 'demo-1' : 'dev-1',
-        name: email === 'a@a' ? 'Admin Demo' : 'Desenvolvedor',
+        id: 'dev-1',
+        name: 'Desenvolvedor',
         email: email,
         role: 'developer',
         unit: 'Solvi',
-        skills: email === 'a@a' ? ['Recrutamento'] : ['Full Stack', 'DevOps'],
-        experience: email === 'a@a' ? 'Acesso de demonstração' : 'Developer access'
+        skills: ['Full Stack', 'DevOps'],
+        experience: 'Developer access'
       });
       setView('admin');
       setLoginError(null);
-    } else {
-      setLoginError('Credenciais inválidas. Tente novamente.');
+      return;
     }
+
+    // Demo Admin
+    if (email === 'a@a' && pass === '123') {
+      setUser({
+        id: 'demo-1',
+        name: 'Admin Demo',
+        email: email,
+        role: 'developer',
+        unit: 'Solvi',
+        skills: ['Recrutamento'],
+        experience: 'Acesso de demonstração'
+      });
+      setView('admin');
+      setLoginError(null);
+      return;
+    }
+
+    // RH
+    if (email === 'rh@solvi.com' && pass === '123') {
+      setUser({
+        id: 'rh-1',
+        name: 'Gestor de RH',
+        email: email,
+        role: 'rh',
+        unit: 'Solvi',
+        skills: ['Gestão de Pessoas'],
+        experience: 'RH Central'
+      });
+      setView('admin');
+      setLoginError(null);
+      return;
+    }
+
+    // Manager
+    if (email === 'gestor@solvi.com' && pass === '123') {
+      setUser({
+        id: 'manager-1',
+        name: 'Gestor de Unidade',
+        email: email,
+        role: 'manager',
+        unit: 'Biometano Caieiras',
+        skills: ['Gestão Operacional'],
+        experience: 'Gestor de Unidade'
+      });
+      setView('admin');
+      setLoginError(null);
+      return;
+    }
+
+    setLoginError('Credenciais inválidas. Tente novamente.');
   };
 
   const handleLogout = () => {
@@ -53,13 +107,27 @@ function App() {
     { label: 'Unidades', value: UNITS.length, icon: Building2, color: 'text-green-500', bg: 'bg-green-500/10' },
   ];
 
+  if (view === 'welcome') {
+    return <Welcome onSelect={(opt) => setView(opt)} />;
+  }
+
+  if (view === 'external') {
+    return <ExternalCandidateForm onBack={() => setView('welcome')} />;
+  }
+
+  if (view === 'employee_portal') {
+    return <EmployeePortal onBack={() => setView('welcome')} />;
+  }
+
   if (view === 'login') {
     return <Login onLogin={handleLogin} error={loginError} />;
   }
 
-  if (view === 'admin' && user?.role === 'developer') {
-    return <AdminDashboard onLogout={handleLogout} />;
+  if (view === 'admin' && (user?.role === 'developer' || user?.role === 'rh' || user?.role === 'manager')) {
+    return <AdminDashboard onLogout={handleLogout} user={user} />;
   }
+
+  const isInternal = view === 'internal';
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-slate-100">
@@ -67,7 +135,7 @@ function App() {
       <nav className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('welcome')}>
               <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
                 <Briefcase className="w-5 h-5 text-white" />
               </div>
@@ -76,7 +144,12 @@ function App() {
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-400">
-              <a href="#" className="text-green-500">Vagas</a>
+              <button 
+                onClick={() => setView('welcome')}
+                className="hover:text-green-500 transition-colors"
+              >
+                Início
+              </button>
               <button 
                 onClick={() => setView('login')}
                 className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-100 transition-all border border-slate-700"
@@ -95,11 +168,15 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-slate-100 mb-6 font-display tracking-tight leading-tight">
-              Indique um talento e ajude a <span className="text-green-500">construir o futuro da Solvi.</span>
+              {isInternal 
+                ? "Explore novas oportunidades e cresça dentro do " 
+                : "Indique um talento e ajude a "}
+              <span className="text-green-500">{isInternal ? "Grupo Solvi." : "construir o futuro da Solvi."}</span>
             </h1>
             <p className="text-lg text-slate-400 mb-10 max-w-2xl mx-auto">
-              Conhece alguém com o perfil ideal para nossas vagas? 
-              Participe do nosso programa de indicações e ajude a fortalecer nossa equipe com os melhores profissionais.
+              {isInternal 
+                ? "Sua jornada na Solvi não tem limites. Confira as vagas disponíveis para movimentação interna e candidate-se."
+                : "Conhece alguém com o perfil ideal para nossas vagas? Participe do nosso programa de indicações e ajude a fortalecer nossa equipe."}
             </p>
           </div>
 

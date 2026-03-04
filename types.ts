@@ -19,13 +19,15 @@ export interface JobVacancy {
   deadline: string;
   salaryRange?: string;
   benefits: string[];
+  status: 'pending_approval' | 'approved';
+  createdBy: string;
 }
 
 export interface UserProfile {
   id: string;
   name: string;
   email: string;
-  role: 'developer' | 'admin' | 'employee';
+  role: 'developer' | 'admin' | 'employee' | 'rh' | 'manager';
   unit: UnitType;
   skills: string[];
   experience: string;
@@ -47,4 +49,20 @@ export interface Referral {
   status: 'pending' | 'reviewed' | 'rejected' | 'hired';
 }
 
+export interface ExternalCandidate {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  cpf: string;
+  address: string;
+  education: string;
+  lastCompany: string;
+  lastRole: string;
+  skills: string[];
+  curriculumUrl?: string;
+  submittedAt: string;
+}
+
+export type ViewType = 'welcome' | 'referral' | 'external' | 'internal' | 'admin' | 'login' | 'employee_portal';
 export type FilterType = 'All' | UnitType;

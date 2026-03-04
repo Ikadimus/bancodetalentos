@@ -27,7 +27,9 @@ export const MOCK_JOBS: JobVacancy[] = [
     postedAt: '2026-02-25',
     deadline: '2026-03-15',
     salaryRange: 'R$ 3.500 - R$ 4.500',
-    benefits: ['Plano de Saúde', 'Vale Alimentação', 'Seguro de Vida']
+    benefits: ['Plano de Saúde', 'Vale Alimentação', 'Seguro de Vida'],
+    status: 'approved',
+    createdBy: 'system'
   },
   {
     id: '2',
@@ -46,7 +48,9 @@ export const MOCK_JOBS: JobVacancy[] = [
     postedAt: '2026-03-01',
     deadline: '2026-03-20',
     salaryRange: 'R$ 8.000 - R$ 12.000',
-    benefits: ['Plano de Saúde', 'PLR', 'Auxílio Combustível']
+    benefits: ['Plano de Saúde', 'PLR', 'Auxílio Combustível'],
+    status: 'approved',
+    createdBy: 'system'
   },
   {
     id: '3',
@@ -65,7 +69,41 @@ export const MOCK_JOBS: JobVacancy[] = [
     postedAt: '2026-02-28',
     deadline: '2026-03-10',
     salaryRange: 'R$ 4.000 - R$ 5.500',
-    benefits: ['Plano de Saúde', 'Vale Refeição', 'Adicional de Periculosidade']
+    benefits: ['Plano de Saúde', 'Vale Refeição', 'Adicional de Periculosidade'],
+    status: 'approved',
+    createdBy: 'system'
+  },
+  {
+    id: '4',
+    title: 'Analista de Logística',
+    department: 'Logística',
+    location: 'Caieiras, SP',
+    unit: 'Biometano Caieiras',
+    quantity: 1,
+    requirements: ['Superior em Logística', 'Experiência em transporte de cargas perigosas'],
+    description: 'Otimizar as rotas de transporte e garantir a entrega eficiente do biometano.',
+    postedAt: '2026-03-04',
+    deadline: '2026-03-25',
+    salaryRange: 'R$ 5.000 - R$ 7.000',
+    benefits: ['Plano de Saúde', 'Vale Refeição'],
+    status: 'pending_approval',
+    createdBy: 'Gestor de Unidade'
+  },
+  {
+    id: '5',
+    title: 'Auxiliar Administrativo',
+    department: 'Administrativo',
+    location: 'Maracanã',
+    unit: 'Biometano Maracanã',
+    quantity: 2,
+    requirements: ['Ensino Médio', 'Conhecimento em Excel'],
+    description: 'Suporte nas rotinas administrativas da unidade.',
+    postedAt: '2026-03-04',
+    deadline: '2026-03-30',
+    salaryRange: 'R$ 2.000 - R$ 2.800',
+    benefits: ['Plano de Saúde', 'Vale Transporte'],
+    status: 'pending_approval',
+    createdBy: 'Gestor de Unidade'
   }
 ];
 

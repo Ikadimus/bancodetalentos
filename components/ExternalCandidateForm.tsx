@@ -72,28 +72,28 @@ export const ExternalCandidateForm: React.FC<ExternalCandidateFormProps> = ({ on
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Nome Completo</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="text" required className="input-field pl-12" placeholder="Seu nome" />
+                    <input type="text" required className="input-field !pl-12" placeholder="Seu nome" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">CPF</label>
                   <div className="relative">
                     <Hash className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="text" required className="input-field pl-12" placeholder="000.000.000-00" />
+                    <input type="text" required className="input-field !pl-12" placeholder="000.000.000-00" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">E-mail</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="email" required className="input-field pl-12" placeholder="seu@email.com" />
+                    <input type="email" required className="input-field !pl-12" placeholder="seu@email.com" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Telefone</label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="tel" required className="input-field pl-12" placeholder="(00) 00000-0000" />
+                    <input type="tel" required className="input-field !pl-12" placeholder="(00) 00000-0000" />
                   </div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export const ExternalCandidateForm: React.FC<ExternalCandidateFormProps> = ({ on
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Endereço Residencial</label>
                 <div className="relative">
                   <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <input type="text" required className="input-field pl-12" placeholder="Rua, Número, Bairro, Cidade - UF" />
+                  <input type="text" required className="input-field !pl-12" placeholder="Rua, Número, Bairro, Cidade - UF" />
                 </div>
               </div>
             </div>
@@ -116,14 +116,14 @@ export const ExternalCandidateForm: React.FC<ExternalCandidateFormProps> = ({ on
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Última Empresa</label>
                   <div className="relative">
                     <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="text" className="input-field pl-12" placeholder="Nome da empresa" />
+                    <input type="text" className="input-field !pl-12" placeholder="Nome da empresa" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Último Cargo</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="text" className="input-field pl-12" placeholder="Seu cargo" />
+                    <input type="text" className="input-field !pl-12" placeholder="Seu cargo" />
                   </div>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export const ExternalCandidateForm: React.FC<ExternalCandidateFormProps> = ({ on
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Escolaridade</label>
                 <div className="relative">
                   <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <select className="input-field pl-12 appearance-none">
+                  <select className="input-field !pl-12 appearance-none">
                     <option value="">Selecione sua escolaridade</option>
                     <option value="fundamental">Ensino Fundamental</option>
                     <option value="medio">Ensino Médio</option>

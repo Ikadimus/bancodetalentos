@@ -76,14 +76,14 @@ export const EmployeePortal: React.FC<EmployeePortalProps> = ({ onBack }) => {
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">E-mail Corporativo ou Pessoal</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="email" required className="input-field pl-12" placeholder="seu@email.com" />
+                    <input type="email" required className="input-field !pl-12" placeholder="seu@email.com" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Telefone / WhatsApp</label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="tel" required className="input-field pl-12" placeholder="(00) 00000-0000" />
+                    <input type="tel" required className="input-field !pl-12" placeholder="(00) 00000-0000" />
                   </div>
                 </div>
               </div>
@@ -99,7 +99,7 @@ export const EmployeePortal: React.FC<EmployeePortalProps> = ({ onBack }) => {
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Unidade</label>
                   <div className="relative">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <select required className="input-field pl-12 appearance-none">
+                    <select required className="input-field !pl-12 appearance-none">
                       <option value="">Selecione sua unidade</option>
                       {UNITS.map(unit => (
                         <option key={unit} value={unit}>{unit}</option>
@@ -111,14 +111,14 @@ export const EmployeePortal: React.FC<EmployeePortalProps> = ({ onBack }) => {
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Setor</label>
                   <div className="relative">
                     <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="text" required className="input-field pl-12" placeholder="Ex: Operacional, Administrativo" />
+                    <input type="text" required className="input-field !pl-12" placeholder="Ex: Operacional, Administrativo" />
                   </div>
                 </div>
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Cargo Atual</label>
                   <div className="relative">
                     <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                    <input type="text" required className="input-field pl-12" placeholder="Seu cargo atual" />
+                    <input type="text" required className="input-field !pl-12" placeholder="Seu cargo atual" />
                   </div>
                 </div>
               </div>

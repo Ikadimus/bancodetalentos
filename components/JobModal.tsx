@@ -145,14 +145,14 @@ export const JobModal: React.FC<JobModalProps> = ({ job, onClose }) => {
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Colaborador (Quem indica)</label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <input type="text" required className="input-field pl-12" placeholder="Seu nome completo" />
+                      <input type="text" required className="input-field !pl-12" placeholder="Seu nome completo" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Matrícula</label>
                     <div className="relative">
                       <Hash className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <input type="text" required className="input-field pl-12" placeholder="Sua matrícula" />
+                      <input type="text" required className="input-field !pl-12" placeholder="Sua matrícula" />
                     </div>
                   </div>
                 </div>
@@ -164,14 +164,14 @@ export const JobModal: React.FC<JobModalProps> = ({ job, onClose }) => {
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Nome do Indicado</label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <input type="text" required className="input-field pl-12" placeholder="Nome completo" />
+                      <input type="text" required className="input-field !pl-12" placeholder="Nome completo" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">E-mail</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <input type="email" required className="input-field pl-12" placeholder="email@exemplo.com" />
+                      <input type="email" required className="input-field !pl-12" placeholder="email@exemplo.com" />
                     </div>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ export const JobModal: React.FC<JobModalProps> = ({ job, onClose }) => {
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Telefone / WhatsApp</label>
                     <div className="relative flex items-center">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <input type="tel" required className="input-field pl-12 pr-12" placeholder="(00) 00000-0000" />
+                      <input type="tel" required className="input-field !pl-12 pr-12" placeholder="(00) 00000-0000" />
                       <div className="absolute right-4 top-1/2 -translate-y-1/2">
                         <WhatsAppIcon />
                       </div>
@@ -191,7 +191,7 @@ export const JobModal: React.FC<JobModalProps> = ({ job, onClose }) => {
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Relação com o indicado</label>
                     <div className="relative">
                       <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <input type="text" required className="input-field pl-12" placeholder="Ex: Amigo, Ex-colega..." />
+                      <input type="text" required className="input-field !pl-12" placeholder="Ex: Amigo, Ex-colega..." />
                     </div>
                   </div>
                 </div>

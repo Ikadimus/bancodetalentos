@@ -252,7 +252,7 @@ function App() {
               <input 
                 type="text"
                 placeholder="Buscar por cargo ou departamento..."
-                className="input-field pl-12"
+                className="input-field !pl-12"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

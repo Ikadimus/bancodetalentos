@@ -39,7 +39,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin, error }) => {
               <input 
                 type="email" 
                 required
-                className="input-field pl-12"
+                className="input-field !pl-12"
                 placeholder="exemplo@solvi.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -54,7 +54,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin, error }) => {
               <input 
                 type="password" 
                 required
-                className="input-field pl-12"
+                className="input-field !pl-12"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

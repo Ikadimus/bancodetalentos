@@ -227,7 +227,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, user }
                   <input 
                     type="text" 
                     placeholder="Filtrar talentos..." 
-                    className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:border-green-500 outline-none"
+                    className="w-full !pl-12 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:border-green-500 outline-none"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />

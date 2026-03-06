@@ -156,7 +156,7 @@ export const Welcome: React.FC<WelcomeProps> = ({ onSelect }) => {
               className="absolute inset-0 bg-green-500/20 blur-[60px] rounded-full"
             />
             <img 
-              src="../logo.png" 
+              src="/logo.png" 
               alt="Logo Solvi" 
               className="relative z-10 w-full h-full object-contain"
               referrerPolicy="no-referrer"

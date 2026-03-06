@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Users, Search, RefreshCw, ArrowRight, Leaf, Globe, Zap, Star } from 'lucide-react';
+import logo from "../logo.png";
 
 interface WelcomeProps {
   onSelect: (option: 'referral' | 'external' | 'internal' | 'employee_portal') => void;
@@ -156,7 +157,7 @@ export const Welcome: React.FC<WelcomeProps> = ({ onSelect }) => {
               className="absolute inset-0 bg-green-500/20 blur-[60px] rounded-full"
             />
             <img 
-              src="/logo.png" 
+               src={logo} 
               alt="Logo Solvi" 
               className="relative z-10 w-full h-full object-contain"
               referrerPolicy="no-referrer"
